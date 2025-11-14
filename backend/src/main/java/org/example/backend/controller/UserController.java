@@ -39,4 +39,6 @@ public class UserController {
         return ResponseUtil.created(newUserId,
                 "User registered successfully.");
     }
+
+
 }
