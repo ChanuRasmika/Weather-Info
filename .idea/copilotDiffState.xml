@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/weather_api/src/main/resources/application.properties">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/weather_api/src/main/resources/application.properties" />
+              <option name="originalContent" value="spring.application.name=weather_api&#10;spring.datasource.username=${DATASOURCE_USER}&#10;spring.datasource.password=${DATASOURCE_PASSWORD}&#10;spring.datasource.url=${DATASOURCE_URL}&#10;&#10;# JPA/Hibernate Configuration&#10;spring.jpa.hibernate.ddl-auto=update&#10;spring.jpa.show-sql=true&#10;spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect&#10;spring.jpa.properties.hibernate.format_sql=true&#10;&#10;#set up the email send details&#10;spring.mail.host=smtp.gmail.com&#10;spring.mail.port=587&#10;spring.mail.username=${EMAIL}&#10;spring.mail.password=${PASSWORD}&#10;spring.mail.properties.mail.smtp.auth=true&#10;spring.mail.properties.mail.smtp.starttls.enable=true&#10;&#10;##JWT&#10;#security.jwt.secret-key=${SECRET_KEY}&#10;## 1h in millisecond&#10;#security.jwt.expiration-time=${EXPIRE_TIME}&#10;&#10;&#10;" />
+              <option name="updatedContent" value="spring.application.name=weather_api&#10;spring.datasource.username=${DATASOURCE_USER}&#10;spring.datasource.password=${DATASOURCE_PASSWORD}&#10;spring.datasource.url=${DATASOURCE_URL}&#10;&#10;# JPA/Hibernate Configuration&#10;spring.jpa.hibernate.ddl-auto=update&#10;spring.jpa.show-sql=true&#10;spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect&#10;spring.jpa.properties.hibernate.format_sql=true&#10;&#10;#set up the email send details&#10;spring.mail.host=smtp.gmail.com&#10;spring.mail.port=587&#10;spring.mail.username=${EMAIL}&#10;spring.mail.password=${PASSWORD}&#10;spring.mail.properties.mail.smtp.auth=true&#10;spring.mail.properties.mail.smtp.starttls.enable=true&#10;&#10;##JWT&#10;#security.jwt.secret-key=${SECRET_KEY}&#10;## 1h in millisecond&#10;#security.jwt.expiration-time=${EXPIRE_TIME}&#10;&#10;&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
