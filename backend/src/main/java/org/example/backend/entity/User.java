@@ -31,6 +31,9 @@ public class User {
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date updated_at;
+    
+    @Column(nullable = false)
+    private boolean mfaEnabled = false;
 
     public User(int id, String email, String password, String role, Date created_at, Date updated_at) {
         this.id = id;

@@ -3,12 +3,14 @@ package org.example.backend.controller;
 import org.example.backend.dto.ApiResponse;
 import org.example.backend.dto.LoginRequest;
 import org.example.backend.dto.LoginResponse;
+import org.example.backend.dto.MfaResponse;
 import org.example.backend.dto.RefreshTokenRequest;
 import org.example.backend.dto.UserInfoDto;
 import org.example.backend.entity.Token;
 import org.example.backend.entity.User;
 import org.example.backend.service.AuthenticationService;
 import org.example.backend.service.JwtService;
+import org.example.backend.service.MfaService;
 import org.example.backend.service.TokenService;
 import org.example.backend.util.CustomUserDetails;
 import org.example.backend.util.ResponseUtil;
@@ -23,18 +25,29 @@ public class AuthController {
     
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;
+    private final MfaService mfaService;
 
     @Autowired
-    public AuthController(AuthenticationService authenticationService, JwtService jwtService) {
+    public AuthController(AuthenticationService authenticationService, JwtService jwtService, MfaService mfaService) {
         this.authenticationService = authenticationService;
         this.jwtService = jwtService;
+        this.mfaService = mfaService;
     }
 
     @PostMapping("/login")
     @Transactional
-    public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ApiResponse<MfaResponse>> login(@RequestBody LoginRequest loginRequest) {
         CustomUserDetails authenticatedUser = authenticationService.authenticate(loginRequest);
         User user = authenticatedUser.getUser();
+        
+        if (user.isMfaEnabled()) {
+            mfaService.sendVerificationCode(user.getEmail());
+            MfaResponse mfaResponse = MfaResponse.builder()
+                    .mfaRequired(true)
+                    .message("MFA verification required. Check your email for verification code.")
+                    .build();
+            return ResponseUtil.success(mfaResponse, "MFA verification required");
+        }
         
         jwtService.revokeAllUserTokens(user);
         
@@ -44,7 +57,7 @@ public class AuthController {
         jwtService.saveToken(accessToken, user, Token.TokenType.ACCESS_TOKEN);
         jwtService.saveToken(refreshToken, user, Token.TokenType.REFRESH_TOKEN);
         
-        LoginResponse response = LoginResponse.builder()
+        LoginResponse loginResponse = LoginResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .tokenType("Bearer")
@@ -56,7 +69,13 @@ public class AuthController {
                         .build())
                 .build();
         
-        return ResponseUtil.success(response, "Login successful");
+        MfaResponse mfaResponse = MfaResponse.builder()
+                .mfaRequired(false)
+                .message("Login successful")
+                .loginResponse(loginResponse)
+                .build();
+        
+        return ResponseUtil.success(mfaResponse, "Login successful");
     }
     
     @PostMapping("/refresh")

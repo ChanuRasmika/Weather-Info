@@ -48,7 +48,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         try {
-            assert authorizationHeader != null;
             final String jwt = authorizationHeader.substring(7);
             final String userEmail = jwtService.extractUsername(jwt);
 

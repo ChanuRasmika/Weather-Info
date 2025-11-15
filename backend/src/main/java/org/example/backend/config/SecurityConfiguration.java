@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> {}) // will automatically use the CorsConfigurationSource bean
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**")
+                        .requestMatchers("/api/auth/**", "/api/mfa/**", "/api/weather/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 )

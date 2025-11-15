@@ -38,4 +38,15 @@ public class ResponseUtil {
                 status
         );
     }
+    
+    public static <T> ResponseEntity<ApiResponse<T>> error(String message, int statusCode) {
+        return new ResponseEntity<>(
+                ApiResponse.<T>builder()
+                        .success(false)
+                        .message(message)
+                        .data(null)
+                        .build(),
+                HttpStatus.valueOf(statusCode)
+        );
+    }
 }

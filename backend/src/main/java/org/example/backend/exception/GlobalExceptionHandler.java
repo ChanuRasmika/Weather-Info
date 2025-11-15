@@ -29,6 +29,15 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST
         );
     }
+    
+    @ExceptionHandler(org.example.backend.exception.MfaException.class)
+    public ResponseEntity<?> handleMfaException(org.example.backend.exception.MfaException ex) {
+        return buildErrorResponse(
+                "MFA_ERROR",
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST
+        );
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationException(MethodArgumentNotValidException ex) {
